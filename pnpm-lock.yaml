@@ -17,6 +17,9 @@ importers:
       '@solidjs/start':
         specifier: ^1.1.0
         version: 1.1.4(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1)(solid-js@1.9.7)(terser@5.41.0)(tsx@4.19.4)(vinxi@0.5.6(@types/node@22.15.30)(db0@0.3.2(drizzle-orm@0.44.2(@types/pg@8.15.4)(pg@8.16.0)))(drizzle-orm@0.44.2(@types/pg@8.15.4)(pg@8.16.0))(ioredis@5.6.1)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.41.0)(tsx@4.19.4))(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.41.0)(tsx@4.19.4))
+      '@tanstack/solid-query':
+        specifier: ^5.80.6
+        version: 5.80.6(solid-js@1.9.7)
       '@trpc/client':
         specifier: ^10.45.2
         version: 10.45.2(@trpc/server@10.45.2)
@@ -44,6 +47,9 @@ importers:
       vinxi:
         specifier: ^0.5.3
         version: 0.5.6(@types/node@22.15.30)(db0@0.3.2(drizzle-orm@0.44.2(@types/pg@8.15.4)(pg@8.16.0)))(drizzle-orm@0.44.2(@types/pg@8.15.4)(pg@8.16.0))(ioredis@5.6.1)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.41.0)(tsx@4.19.4)
+      zod:
+        specifier: ^3.25.56
+        version: 3.25.56
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.0.7
@@ -1128,6 +1134,9 @@ packages:
     resolution: {integrity: sha512-VQKnPQ1ftgO6YoMaHMSTYvpmi3pOunD/x9SXTAkhtIjNaTSHY24XfbykHbF0MUi6o+gOAkAt60c3ckT2xjgcgA==}
     engines: {node: '>=12'}
 
+  '@tanstack/query-core@5.80.6':
+    resolution: {integrity: sha512-nl7YxT/TAU+VTf+e2zTkObGTyY8YZBMnbgeA1ee66lIVqzKlYursAII6z5t0e6rXgwUMJSV4dshBTNacNpZHbQ==}
+
   '@tanstack/router-utils@1.120.17':
     resolution: {integrity: sha512-emgT4FthaGtTRaRg9bsr0uaq3EHdl/flS4bKLuFaetiFTt8wk8EVU2a7EZlkaaAfLLDPaiGbP1S2DDaZQ7ci+Q==}
     engines: {node: '>=12'}
@@ -1135,6 +1144,11 @@ packages:
   '@tanstack/server-functions-plugin@1.120.17':
     resolution: {integrity: sha512-KAje/boeSCSUVLKRxF/kXwE433LYoSuAHON/yojoK0jk/WO/Ie3TYS2tY0+532nqymGnGJ2bRKMMg6Gp58iaXg==}
     engines: {node: '>=12'}
+
+  '@tanstack/solid-query@5.80.6':
+    resolution: {integrity: sha512-fmq1dHoZsEMsd0mYk9y9Lukp7156xgrjgrKifpPFcCw9rsT8WLewvgrm2Ap5DmeZgs/xoHK7rBmR1bU1NfPteQ==}
+    peerDependencies:
+      solid-js: ^1.6.0
 
   '@trpc/client@10.45.2':
     resolution: {integrity: sha512-ykALM5kYWTLn1zYuUOZ2cPWlVfrXhc18HzBDyRhoPYN0jey4iQHEFSEowfnhg1RvYnrAVjNBgHNeSAXjrDbGwg==}
@@ -4692,6 +4706,8 @@ snapshots:
       - tsx
       - yaml
 
+  '@tanstack/query-core@5.80.6': {}
+
   '@tanstack/router-utils@1.120.17':
     dependencies:
       '@babel/generator': 7.27.5
@@ -4726,6 +4742,11 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  '@tanstack/solid-query@5.80.6(solid-js@1.9.7)':
+    dependencies:
+      '@tanstack/query-core': 5.80.6
+      solid-js: 1.9.7
 
   '@trpc/client@10.45.2(@trpc/server@10.45.2)':
     dependencies:
