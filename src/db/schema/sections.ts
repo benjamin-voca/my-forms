@@ -9,7 +9,7 @@ import {
     index, // Import 'index'
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
-
+import { users } from '~/db/schema/users'
 // Define a Postgres enum for section types
 export const SectionType = pgEnum('section_type', [
     'ShortAnswer',
@@ -28,6 +28,8 @@ export const SectionType = pgEnum('section_type', [
 // Forms table
 export const forms = pgTable('forms', {
     id: serial('id').primaryKey(),
+    userId: integer("user_id").notNull()
+        .references(() => users.id, { onDelete: 'cascade' }),
     title: varchar('title', { length: 255 }).notNull(),
     description: text('description').notNull(),
 });

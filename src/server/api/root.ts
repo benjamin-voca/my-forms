@@ -1,7 +1,7 @@
-import { formsRouter } from "~/db/schema/forms";
-import { exampleRouter } from "./routers/example";
-import { sectionsRouter } from "./routers/forms";
-import { createTRPCRouter } from "./utils";
+import { formsRouter } from "~/server/api/routers/forms";
+import { exampleRouter } from "~/server/api/routers/example";
+import { sectionsRouter } from "~/server/api/routers/sections";
+import { createTRPCRouter } from "~/server/api/utils";
 
 export const appRouter = createTRPCRouter({
     example: exampleRouter,

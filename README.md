@@ -1,3 +1,10 @@
+# TODO
+  - [] add tsx comps for each member of enum
+  - [] make homescreen
+  - [] finish auth
+  - [] make form actually work
+
+
 # SolidStart
 
 Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
