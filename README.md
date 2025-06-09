@@ -1,8 +1,8 @@
 # TODO
-  - [] add tsx comps for each member of enum
-  - [] make homescreen
-  - [] finish auth
-  - [] make form actually work
+  - [ ] add tsx comps for each member of enum
+  - [ ] make homescreen
+  - [ ] finish auth
+  - [ ] make form actually work
 
 
 # SolidStart
