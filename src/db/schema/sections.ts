@@ -8,6 +8,7 @@ import {
     pgEnum,
     jsonb,
     index,
+    unique,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { users } from '~/db/schema/users';
@@ -36,8 +37,11 @@ export const sectionKinds = [
     'Time',
 ] as const;
 
+export const formUserRole = ['admin', 'participant'] as const;
+
 // 2) Derive a TS union type from that tuple:
 export type SectionKind = typeof sectionKinds[number];
+export type FormUserRole = typeof formUserRole[number];
 
 // 3) Define the payload for each kind in one place:
 interface SectionPayloads {
@@ -61,7 +65,8 @@ export type SectionDetails = {
 
 // feed the *same* `sectionKinds` array into pgEnum:
 export const SectionType = pgEnum('section_type', sectionKinds);
-
+export const FormUserRole = pgEnum('form_user_role', formUserRole);
+/**  Form Section  **/
 export const sections = pgTable(
     'sections',
     {
@@ -74,17 +79,39 @@ export const sections = pgTable(
         type: SectionType('type').notNull(),
         details: jsonb('details').$type<SectionDetails>().notNull(),
     },
-    (table) => ({
-        form_idx: index('sections_form_id_idx').on(table.formId),
-        // GIN‐index the JSONB for containment queries
-        details_gin_idx: index('sections_details_gin_idx').on(table.details),
-    })
+    (table) => [
+        index('sections_form_id_idx').on(table.formId),
+        index('sections_details_gin_idx').on(table.details),
+    ]
 );
 
 export const formsRelations = relations(forms, ({ many }) => ({
     sections: many(sections),
+    users: many(formUsers),
 }));
 
 export const sectionsRelations = relations(sections, ({ one }) => ({
     form: one(forms, { fields: [sections.formId], references: [forms.id] }),
 }));
+
+/**  Form User Section  **/
+export const formUsers = pgTable('form_users', {
+    id: serial('id').primaryKey(), // add a surrogate PK
+    formId: integer('form_id').notNull()
+        .references(() => forms.id, { onDelete: 'cascade' }),
+    userId: integer('user_id').notNull()
+        .references(() => users.id, { onDelete: 'cascade' }),
+    role: FormUserRole('role').notNull(),
+}, (table) => [
+    unique().on(table.formId, table.userId, table.role),
+]);
+
+export const usersRelations = relations(users, ({ many }) => ({
+    forms: many(formUsers),
+}));
+
+export const formUsersRelations = relations(formUsers, ({ one }) => ({
+    form: one(forms, { fields: [formUsers.formId], references: [forms.id] }),
+    user: one(users, { fields: [formUsers.userId], references: [users.id] }),
+}));
+
