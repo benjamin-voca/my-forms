@@ -4,37 +4,43 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "db:generate-types": "ts-node scripts/generate-types.ts"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.15.0",
-    "@solidjs/start": "^1.1.0",
-    "@tanstack/solid-query": "^5.80.6",
-    "@trpc/client": "^10.45.2",
-    "@trpc/server": "^10.45.2",
-    "@typeschema/valibot": "^0.13.4",
+    "@solidjs/router": "^0.15.3",
+    "@solidjs/start": "^1.1.5",
+    "@tanstack/react-query-devtools": "^5.81.5",
+    "@tanstack/solid-query": "^5.81.5",
+    "@trpc/client": "^11.4.3",
+    "@trpc/server": "^11.4.3",
+    "@typeschema/valibot": "^0.13.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "drizzle-orm": "^0.44.2",
-    "pg": "^8.16.0",
-    "solid-js": "^1.9.5",
-    "tailwind-merge": "^3.3.0",
+    "drizzle-zod": "^0.8.2",
+    "pg": "^8.16.3",
+    "solid-js": "^1.9.7",
+    "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
+    "ts-pattern": "^5.7.1",
     "valibot": "^0.29.0",
-    "vinxi": "^0.5.3",
-    "zod": "^3.25.56"
+    "vinxi": "^0.5.8",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.8",
-    "@tailwindcss/postcss": "^4.1.8",
-    "@tailwindcss/vite": "^4.1.8",
+    "@tailwindcss/cli": "^4.1.11",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
     "@types/pg": "^8.15.4",
     "autoprefixer": "^10.4.21",
-    "drizzle-kit": "^0.31.1",
-    "tailwindcss": "^4.1.8",
-    "tsx": "^4.19.4"
+    "drizzle-kit": "^0.31.4",
+    "tailwindcss": "^4.1.11",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
   },
   "engines": {
     "node": ">=22"

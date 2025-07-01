@@ -1,15 +1,20 @@
-export default function FileUpload({ section }: { section: any }) {
+import { SectionPayloads } from "~/db/schema/sections";
+
+export default function FileUpload({
+  section,
+}: {
+  section: { type: "FileUpload" } & SectionPayloads["FileUpload"];
+}) {
   return (
     <div class="mb-6">
-      <label class="block font-medium mb-1">{section.title}</label>
       <input
         type="file"
-        multiple={section.fileUpload?.maxFiles > 1}
+        multiple={section.maxFiles > 1}
         class="w-full"
       />
-      {section.fileUpload?.maxFileSize && (
+      {section.maxFileSizeMB && (
         <p class="text-sm text-gray-500 mt-1">
-          Max size: {section.fileUpload.maxFileSize} MB
+          Max size: {section.maxFileSizeMB} MB
         </p>
       )}
     </div>

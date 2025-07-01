@@ -1,33 +1,19 @@
 // src/server/api/routers/sections.ts
 import { z } from 'zod'
 import { createTRPCRouter, publicProcedure } from '../utils'
-import {
-    sections,
-    forms,
-} from '~/db/schema/sections'
+import { sections } from '~/db/schema/sections'
 import { db } from '~/db/index'
 import { eq, InferInsertModel } from 'drizzle-orm'
+import { forms } from '~/db/schema/forms'
+import { createInsertSchema } from 'drizzle-zod';
 
-export const sectionInput =
-    z.discriminatedUnion('type', [
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('ShortAnswer'), placeholder: z.string().optional() }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('Paragraph'), placeholder: z.string().optional() }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('MultipleChoice'), options: z.array(z.string()), allowOther: z.boolean().optional() }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('Checkbox'), options: z.array(z.string()), minSelections: z.number().optional(), maxSelections: z.number().optional() }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('Dropdown'), options: z.array(z.string()) }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('FileUpload'), maxFiles: z.number().optional(), maxFileSize: z.number().optional() }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('LinearScale'), minValue: z.number(), maxValue: z.number(), step: z.number().optional() }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('MCGrid'), rowLabels: z.array(z.string()), columnLabels: z.array(z.string()) }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('CheckboxGrid'), rowLabels: z.array(z.string()), columnLabels: z.array(z.string()) }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('Date'), includeTime: z.boolean().optional() }),
-        z.object({ formId: z.number(), title: z.string(), description: z.string(), required: z.boolean(), type: z.literal('Time') }),
-    ])
+
 
 type SectionInsert = InferInsertModel<typeof sections>
 export const sectionsRouter = createTRPCRouter({
     // CREATE a new section in one go
     createSection: publicProcedure
-        .input(sectionInput)
+        .input(createInsertSchema(sections))
         .mutation(async ({ input }) => {
             const {
                 formId,
@@ -40,7 +26,7 @@ export const sectionsRouter = createTRPCRouter({
 
             // 1) First, build the details payload and type‐assert it
             const detailsPayload = {
-                kind: type,
+                type: type,
                 ...variantFields,
             } as SectionInsert['details']  // <— this tells TS “this is exactly the JSONB shape you expect”
 

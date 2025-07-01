@@ -1,9 +1,10 @@
 // src/server/api/routers/forms.ts
 import { z } from 'zod'
 import { createTRPCRouter, publicProcedure } from '~/server/api/utils'
-import { forms } from '~/db/schema/sections'
+import { forms } from '~/db/schema/forms'
 import { db } from '~/db/index'
 import { eq } from 'drizzle-orm'
+import { createInsertSchema } from 'drizzle-zod'
 
 export const formsRouter = createTRPCRouter({
     /**
@@ -12,13 +13,7 @@ export const formsRouter = createTRPCRouter({
      * @returns the newly created form record
      */
     createForm: publicProcedure
-        .input(
-            z.object({
-                title: z.string().min(1, "Title is required"),
-                description: z.string().min(1, "Description is required"),
-                userId: z.number(),
-            })
-        )
+        .input(createInsertSchema(forms))
         .mutation(async ({ input }) => {
             // Insert a new form and return the created record
             const [newForm] = await db.insert(forms)

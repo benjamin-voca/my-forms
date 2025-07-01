@@ -8,19 +8,12 @@ import {
     pgEnum,
     jsonb,
     index,
-    unique,
 } from 'drizzle-orm/pg-core';
-import { relations } from 'drizzle-orm';
+import { InferInsertModel, relations } from 'drizzle-orm';
 import { users } from '~/db/schema/users';
+import { forms } from '~/db/schema/forms';
+import { formUsers } from '~/db/schema/formUsers';
 
-// Forms table
-export const forms = pgTable('forms', {
-    id: serial('id').primaryKey(),
-    userId: integer("user_id").notNull()
-        .references(() => users.id, { onDelete: 'cascade' }),
-    title: varchar('title', { length: 255 }).notNull(),
-    description: text('description').notNull(),
-});
 
 // 1) Declare your kinds once, as a `const` tuple:
 export const sectionKinds = [
@@ -37,14 +30,12 @@ export const sectionKinds = [
     'Time',
 ] as const;
 
-export const formUserRole = ['admin', 'participant'] as const;
 
 // 2) Derive a TS union type from that tuple:
 export type SectionKind = typeof sectionKinds[number];
-export type FormUserRole = typeof formUserRole[number];
 
 // 3) Define the payload for each kind in one place:
-interface SectionPayloads {
+export interface SectionPayloads {
     ShortAnswer: { placeholder?: string };
     Paragraph: { placeholder?: string };
     MultipleChoice: { options: string[]; allowOther: boolean };
@@ -60,12 +51,11 @@ interface SectionPayloads {
 
 // 4) Build the discriminated‐union type by mapping over the keys:
 export type SectionDetails = {
-    [K in SectionKind]: { kind: K } & SectionPayloads[K]
+    [K in SectionKind]: { type: K } & SectionPayloads[K]
 }[SectionKind];
 
 // feed the *same* `sectionKinds` array into pgEnum:
 export const SectionType = pgEnum('section_type', sectionKinds);
-export const FormUserRole = pgEnum('form_user_role', formUserRole);
 /**  Form Section  **/
 export const sections = pgTable(
     'sections',
@@ -84,7 +74,7 @@ export const sections = pgTable(
         index('sections_details_gin_idx').on(table.details),
     ]
 );
-
+export type Section = InferInsertModel<typeof sections>;
 export const formsRelations = relations(forms, ({ many }) => ({
     sections: many(sections),
     users: many(formUsers),
@@ -95,16 +85,7 @@ export const sectionsRelations = relations(sections, ({ one }) => ({
 }));
 
 /**  Form User Section  **/
-export const formUsers = pgTable('form_users', {
-    id: serial('id').primaryKey(), // add a surrogate PK
-    formId: integer('form_id').notNull()
-        .references(() => forms.id, { onDelete: 'cascade' }),
-    userId: integer('user_id').notNull()
-        .references(() => users.id, { onDelete: 'cascade' }),
-    role: FormUserRole('role').notNull(),
-}, (table) => [
-    unique().on(table.formId, table.userId, table.role),
-]);
+
 
 export const usersRelations = relations(users, ({ many }) => ({
     forms: many(formUsers),
