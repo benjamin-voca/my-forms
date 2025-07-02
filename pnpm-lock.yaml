@@ -23,6 +23,9 @@ importers:
       '@tanstack/solid-query':
         specifier: ^5.81.5
         version: 5.81.5(solid-js@1.9.7)
+      '@thisbeyond/solid-dnd':
+        specifier: ^0.7.5
+        version: 0.7.5(solid-js@1.9.7)
       '@trpc/client':
         specifier: ^11.4.3
         version: 11.4.3(@trpc/server@11.4.3(typescript@5.8.3))(typescript@5.8.3)
@@ -1114,6 +1117,12 @@ packages:
     resolution: {integrity: sha512-VqVXaxiJIsKA6B45uApF+RUD3g8Roj/vdAuGpHMjR+RyHqlyQ+hOwgmALkzlbkbIaWCQi8CJOvrbU6WOBuMOxA==}
     peerDependencies:
       solid-js: ^1.6.0
+
+  '@thisbeyond/solid-dnd@0.7.5':
+    resolution: {integrity: sha512-DfI5ff+yYGpK9M21LhYwIPlbP2msKxN2ARwuu6GF8tT1GgNVDTI8VCQvH4TJFoVApP9d44izmAcTh/iTCH2UUw==}
+    engines: {node: '>=18.0.0', pnpm: '>=8.6.0'}
+    peerDependencies:
+      solid-js: ^1.5
 
   '@trpc/client@11.4.3':
     resolution: {integrity: sha512-i2suttUCfColktXT8bqex5kHW5jpT15nwUh0hGSDiW1keN621kSUQKcLJ095blqQAUgB+lsmgSqSMmB4L9shQQ==}
@@ -4761,6 +4770,10 @@ snapshots:
   '@tanstack/solid-query@5.81.5(solid-js@1.9.7)':
     dependencies:
       '@tanstack/query-core': 5.81.5
+      solid-js: 1.9.7
+
+  '@thisbeyond/solid-dnd@0.7.5(solid-js@1.9.7)':
+    dependencies:
       solid-js: 1.9.7
 
   '@trpc/client@11.4.3(@trpc/server@11.4.3(typescript@5.8.3))(typescript@5.8.3)':

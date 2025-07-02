@@ -29,7 +29,7 @@ interface SectionCardProps {
 
 const SectionCard: Component<SectionCardProps> = (props) => {
   return (
-    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl mb-6">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-4xl mb-6 mx-auto">
       <div class="mb-4">
         <h2 class="text-xl font-medium text-gray-900">{props.title}</h2>
         {props.description && (

@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, serial, unique } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, serial } from "drizzle-orm/pg-core";
 import { forms } from "~/db/schema/forms";
 import { users } from "~/db/schema/users";
 
@@ -13,6 +13,4 @@ export const formUsers = pgTable('form_users', {
     userId: integer('user_id').notNull()
         .references(() => users.id, { onDelete: 'cascade' }),
     role: FormUserRole('role').notNull(),
-}, (table) => [
-    unique().on(table.formId, table.userId, table.role),
-]);
+});
