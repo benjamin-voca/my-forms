@@ -3,7 +3,8 @@
   - [ ] make homescreen
   - [ ] finish auth
   - [ ] make form actually work
-
+# Gotchas
+all schemas defined by drizzle need to be in ./src/db/schema/ folder, and the only schema present in that file has to have the name of the file
 
 # SolidStart
 

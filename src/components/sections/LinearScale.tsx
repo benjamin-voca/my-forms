@@ -1,8 +1,13 @@
-export default function LinearScale({ section }: { section: any }) {
-  const { minValue, maxValue, step } = section.linearScale;
+import { SectionPayloads } from "~/db/schema/sections";
+
+export default function LinearScale({
+  section,
+}: {
+  section: { type: "LinearScale" } & SectionPayloads["LinearScale"];
+}) {
+  const { minValue, maxValue, step } = section;
   return (
     <div class="mb-6">
-      <p class="font-medium mb-2">{section.title}</p>
       <div class="flex justify-between text-sm text-gray-600 mb-1">
         <span>{minValue}</span>
         <span>{maxValue}</span>

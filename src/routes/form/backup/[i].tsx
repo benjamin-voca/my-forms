@@ -1,9 +1,9 @@
 import { createSignal } from "solid-js";
 import { api } from "~/lib/api";
-// Import createQuery and createMutation from @tanstack/solid-query
 import { createQuery, createMutation } from "@tanstack/solid-query";
 import { useParams } from "@solidjs/router";
 import z from "zod";
+import { Section } from "~/db/types";
 
 
 const ParamsSchema = z.object({
@@ -33,7 +33,8 @@ export default function Home() {
         description: "This was created with a mutation.",
         required: false,
         type: "ShortAnswer",
-      }),
+        details : { placeholder:"placeholder" }
+      }as Section),
     onSuccess: () => {
       getForm.refetch();
     },

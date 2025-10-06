@@ -1,32 +1,43 @@
-export default function MCGrid({ section }: { section: any }) {
-  const rows = section.mcGrid?.rowLabels ?? [];
-  const cols = section.mcGrid?.columnLabels ?? [];
+import { For } from "solid-js";
+import { SectionPayloads } from "~/db/schema/sections";
+
+export default function MCGrid({
+  section,
+}: {
+  section: { type: "MCGrid" } & SectionPayloads["MCGrid"];
+}) {
+  const rows = section.rowLabels ?? [];
+  const cols = section.columnLabels ?? [];
 
   return (
     <div class="mb-6 overflow-x-auto">
-      <p class="font-medium mb-2">{section.title}</p>
       <table class="w-full border text-sm">
         <thead>
           <tr>
             <th></th>
-            {cols.map((col: string, i: number) => (
-              <th key={i} class="p-2 border text-center">{col}</th>
-            ))}
+            <For each={cols}>
+              {(col) => <th class="p-2 border text-center">{col}</th>}
+            </For>
           </tr>
         </thead>
         <tbody>
-          {rows.map((row: string, i: number) => (
-            <tr key={i}>
-              <td class="p-2 border">{row}</td>
-              {cols.map((_, j: number) => (
-                <td class="p-2 border text-center" key={j}>
-                  <input type="radio" name={`grid-${i}`} />
-                </td>
-              ))}
-            </tr>
-          ))}
+          <For each={rows}>
+            {(row, i) => (
+              <tr>
+                <td class="p-2 border">{row}</td>
+                <For each={cols}>
+                  {() => (
+                    <td class="p-2 border text-center">
+                      <input type="radio" name={`grid-${i()}`} />
+                    </td>
+                  )}
+                </For>
+              </tr>
+            )}
+          </For>
         </tbody>
       </table>
     </div>
   );
 }
+
